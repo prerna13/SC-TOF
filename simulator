@@ -1,0 +1,16 @@
+import org.cloudbus.cloudsim.core.CloudSim;
+
+public class TaskOffloadingWithBlockchain {
+    public static void main(String[] args) {
+        try {
+            CloudSim.init(1, null, false);
+
+            BlockchainEnabledFogNode fogNode = new BlockchainEnabledFogNode("FogNode1", "http://127.0.0.1:8545");
+            fogNode.sendDataToBlockchain("0xYourSmartContractAddress", "12345");
+
+            CloudSim.startSimulation();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
