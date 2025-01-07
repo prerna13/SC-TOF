@@ -1,0 +1,16 @@
+import org.cloudbus.cloudsim.core.CloudSim;
+
+public class BlockchainEnabledFogNode extends FogDevice {
+
+    private BlockchainConnector blockchainConnector;
+
+    public BlockchainEnabledFogNode(String name, String blockchainUrl) throws Exception {
+        super(name, null, null, null, null);
+        blockchainConnector = new BlockchainConnector(blockchainUrl);
+        System.out.println("Connected to Blockchain: " + blockchainConnector.getClientVersion());
+    }
+
+    public void sendDataToBlockchain(String contractAddress, String data) throws Exception {
+        blockchainConnector.interactWithContract(contractAddress, data);
+    }
+}
