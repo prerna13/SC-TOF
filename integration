@@ -1,0 +1,32 @@
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
+import org.web3j.protocol.core.methods.response.Web3ClientVersion;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.tx.Contract;
+import org.web3j.tx.gas.DefaultGasProvider;
+
+import java.math.BigInteger;
+
+public class BlockchainConnector {
+
+    private Web3j web3j;
+
+    public BlockchainConnector(String blockchainUrl) {
+        // Connect to Ethereum node
+        web3j = Web3j.build(new HttpService(blockchainUrl));
+    }
+
+    public String getClientVersion() throws Exception {
+        Web3ClientVersion clientVersion = web3j.web3ClientVersion().send();
+        return clientVersion.getWeb3ClientVersion();
+    }
+
+    public TransactionReceipt interactWithContract(String contractAddress, String data) throws Exception {
+        // Example: Interacting with a deployed smart contract
+        MySmartContract contract = MySmartContract.load(
+                contractAddress, web3j, new DefaultGasProvider()
+        );
+
+        return contract.storeData(new BigInteger(data)).send();
+    }
+}
